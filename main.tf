@@ -3,6 +3,17 @@ resource "aws_instance" "my_ec2" {
   instance_type = "t3.micro"
   subnet_id     = aws_subnet.public_subnet.id
 
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              apt update -y
+              apt install -y nginx
+              systemctl start nginx
+              systemctl enable nginx
+              echo "<h1>Hello from Terraform 🚀</h1>" > /var/www/html/index.html
+              EOF
+
   tags = {
     Name = "Terraform-EC2"
   }
@@ -61,4 +72,39 @@ resource "aws_route_table" "public_rt" {
 resource "aws_route_table_association" "rt_assoc" {
   subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.public_rt.id
+}
+
+#Security Group(SG)
+
+resource "aws_security_group" "web_sg" {
+  name        = "web-sg"
+  description = "Allow HTTP and SSH"
+  vpc_id      = aws_vpc.my_vpc.id
+
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "Web-SG"
+  }
 }
