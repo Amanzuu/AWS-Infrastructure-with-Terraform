@@ -31,3 +31,15 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve || true
+
+      - name: Deploy App via SSM
+        run: |
+          INSTANCE_IDS=$(aws ec2 describe-instances \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text)
+
+          aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --targets "Key=instanceIds,Values=$INSTANCE_IDS" \
+            --parameters commands="echo '🚀 Deployed via CI/CD' > /var/www/html/index.html && systemctl restart nginx" \
+            --region us-east-2
