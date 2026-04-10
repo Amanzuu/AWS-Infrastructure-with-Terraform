@@ -35,8 +35,10 @@ jobs:
       - name: Deploy App via SSM
         run: |
           INSTANCE_IDS=$(aws ec2 describe-instances \
-            --query "Reservations[*].Instances[*].InstanceId" \
-            --output text)
+          --query "Reservations[*].Instances[*].InstanceId" \
+          --output text | tr '\n' ' ')
+
+          echo "Instances: $INSTANCE_IDS"
 
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
