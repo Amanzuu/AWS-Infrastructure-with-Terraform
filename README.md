@@ -1,117 +1,127 @@
-# 🚀 AWS CI/CD Infrastructure with Terraform & GitHub Actions
-
-An end-to-end DevOps project that automates infrastructure provisioning and application deployment on AWS using Terraform and GitHub Actions.
-
----
-
-## 📌 Project Overview
-
-This project demonstrates a **production-style CI/CD pipeline** where:
-
-- Infrastructure is provisioned using **Terraform**
-- Deployment is automated using **GitHub Actions**
-- Application is deployed to EC2 instances using **AWS Systems Manager (SSM)**
-- Traffic is distributed via an **Application Load Balancer (ALB)**
+<div align='center'>
+    <h1 align='center'> 🚀 AWS CI/CD Infrastructure with Terraform </h1>
+    <p align='center'> A production-style DevOps project that provisions AWS infrastructure using Terraform and automates application deployment using GitHub Actions and AWS Systems Manager (SSM), with load balancing via Application Load Balancer. </p>
+    <div>
+        <img src="https://img.shields.io/badge/AWS-Cloud-FF9900?logo=amazon-aws&logoColor=white">
+        <img src="https://img.shields.io/badge/Terraform-IaC-623CE4?logo=terraform&logoColor=white">
+        <img src="https://img.shields.io/badge/GitHub%20Actions-CI/CD-2088FF?logo=github-actions&logoColor=white">
+        <img src="https://img.shields.io/badge/Nginx-Web%20Server-009639?logo=nginx&logoColor=white">
+        <img src="https://img.shields.io/badge/SSM-Secure%20Deployment-232F3E">
+    </div>
+</div>
 
 ---
 
-## 🏗️ Architecture
+### 📌 Project Overview
 
-User → ALB → Auto Scaling Group → EC2 Instances → Nginx Web Server
+*This project demonstrates a real-world DevOps workflow where infrastructure provisioning and application deployment are fully automated using CI/CD pipelines.*
 
----
-
-## ⚙️ Tech Stack
-
-- **Cloud**: AWS (EC2, ALB, Auto Scaling, VPC, IAM, SSM)
-- **IaC**: Terraform
-- **CI/CD**: GitHub Actions
-- **Web Server**: Nginx
-- **Version Control**: Git & GitHub
+- **Infrastructure as Code:** Provision AWS resources using Terraform  
+- **CI/CD Automation:** Deploy application via GitHub Actions  
+- **Secure Deployment:** Use AWS SSM (no SSH required)  
+- **Load Balancing:** Distribute traffic using ALB  
+- **Auto Scaling:** Handle dynamic traffic with ASG  
+- **Dynamic UI:** Displays instance hostname to verify load balancing  
 
 ---
 
-## 🔄 CI/CD Workflow
+### 🏗️ Architecture
 
-1. Developer pushes code to GitHub
-2. GitHub Actions pipeline is triggered
-3. Terraform initializes and applies infrastructure changes
-4. Instance IDs are fetched dynamically
-5. AWS SSM executes deployment commands on all EC2 instances
-6. Nginx serves updated application via ALB
+User → ALB → Auto Scaling Group → EC2 Instances → Nginx Server
 
 ---
 
-## 🔐 Security Features
+### ⚙️ Tools and Technologies
 
-- No SSH access required (SSM used instead)
-- IAM roles used for secure access
-- GitHub Secrets for AWS credentials
-
----
-
-## 🌐 Features
-
-- ⚡ Automated Infrastructure Provisioning
-- 🔁 Load Balancing across multiple instances
-- 🔄 Auto Scaling enabled
-- 🚫 No manual server access required
-- 🎯 Dynamic UI showing instance hostname
-- 🎨 Animated deployment dashboard
+| Tool / Service | Purpose |
+|------|-------------|
+| AWS EC2 | Compute instances |
+| AWS ALB | Load balancing |
+| Auto Scaling Group | Scaling infrastructure |
+| VPC | Networking |
+| IAM | Access control |
+| AWS SSM | Remote command execution |
+| Terraform | Infrastructure provisioning |
+| GitHub Actions | CI/CD pipeline |
+| Nginx | Web server |
 
 ---
 
-## 📸 Demo
+### 🔄 CI/CD Pipeline Workflow
 
-- Access the application via ALB DNS
-- Refresh page to observe load balancing across instances
+**(1) Code Push**
+
+- Developer pushes code to GitHub
+
+**(2) Pipeline Trigger**
+
+- GitHub Actions workflow starts automatically
+
+**(3) Infrastructure Deployment**
+
+- Terraform initializes and applies changes
+
+**(4) Instance Discovery**
+
+- EC2 instance IDs are fetched dynamically
+
+**(5) Deployment via SSM**
+
+- Commands executed remotely:
+  - Update web content
+  - Restart Nginx
+
+**(6) Load Balanced Output**
+
+- Application served via ALB across multiple instances
 
 ---
 
-## 🚧 Challenges Faced
+### 🚀 Features
 
-- Handling JSON escaping in CI/CD pipelines
-- Passing correct instance IDs to SSM
-- Debugging Terraform resource conflicts
-- Fixing encoding issues in HTML deployment
-
----
-
-## 🧠 Key Learnings
-
-- Real-world CI/CD pipeline design
-- Infrastructure as Code (IaC) best practices
-- Secure AWS resource management
-- Debugging cloud-based deployments
-- Automating deployments without SSH
+| Feature | Description |
+|------|-------------|
+| Automated Infrastructure | Terraform provisions complete AWS setup |
+| CI/CD Pipeline | Fully automated deployment |
+| Secure Deployment | No SSH, uses AWS SSM |
+| Load Balancing | Traffic distributed via ALB |
+| Auto Scaling | Handles dynamic load |
+| Dynamic UI | Displays instance hostname |
+| Animated Dashboard | Modern UI with animations |
 
 ---
 
-## 🚀 How to Run
+### 📸 Demo
 
-### 1. Clone the repository
+- Open ALB DNS URL  
+- Refresh page to observe different instances  
+
+---
+
+### 🚧 Challenges Faced
+
+- JSON escaping issues in GitHub Actions  
+- Passing correct instance IDs to SSM  
+- Terraform resource conflicts  
+- Fixing UTF-8 encoding issues in HTML  
+- Debugging CI/CD pipeline failures  
+
+---
+
+### 🧠 Key Learnings
+
+- Designing real-world CI/CD pipelines  
+- Infrastructure as Code (IaC) best practices  
+- Secure cloud deployments without SSH  
+- Debugging Terraform + AWS integration  
+- Automating deployments at scale  
+
+---
+
+### 🛠️ Setup Instructions
+
+#### Clone Repository
+
 ```bash
 git clone https://github.com/your-username/AWS-Infrastructure-with-Terraform.git
 cd AWS-Infrastructure-with-Terraform
-2. Initialize Terraform
-terraform init
-3. Apply Infrastructure
-terraform apply
-4. Push code to trigger CI/CD
-git add .
-git commit -m "trigger pipeline"
-git push origin main
-🧹 Cleanup
-
-To destroy all resources:
-
-terraform destroy
-📈 Future Improvements
-Dockerize application
-Deploy using ECS/EKS
-Add monitoring (CloudWatch / Prometheus / Grafana)
-Implement Blue-Green Deployment
-Add HTTPS with ACM
-🙌 Author
-
-Aman Dhalla
