@@ -45,5 +45,28 @@ jobs:
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --targets "Key=instanceIds,Values=$TARGETS" \
-            --parameters '{"commands":["echo \"🚀 Deployed via CI/CD\" > /var/www/html/index.html","systemctl restart nginx"]}' \
-            --region us-east-2
+            --parameters '{"commands":[
+            "cat <<EOF > /var/www/html/index.html  
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <title>DevOps Project 🚀</title>
+              <style>
+                body { font-family: Arial; text-align: center; background: #0f172a; color: white; }
+                h1 { color: #38bdf8; }
+                .box { margin-top: 50px; padding: 20px; border: 1px solid #38bdf8; border-radius: 10px; display: inline-block; }
+              </style>
+            </head>
+            <body>
+              <h1> CI/CD Deployment Successful</h1>
+              <div class=\"box\">
+                <p><b>Instance:</b> $(hostname)</p>
+                <p><b>Deployed via:</b> GitHub Actions</p>
+                <p><b>Server:</b> Nginx</p>
+                <p><b>Status:</b> Running ✅</p>
+              </div>
+            </body>
+            </html>
+            EOF",
+            "systemctl restart nginx"
+            ]}'
