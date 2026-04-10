@@ -41,5 +41,5 @@ jobs:
           aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --targets "Key=instanceIds,Values=$INSTANCE_IDS" \
-            --parameters commands="echo '🚀 Deployed via CI/CD' > /var/www/html/index.html && systemctl restart nginx" \
+            --parameters '{"commands":["echo \"🚀 Deployed via CI/CD\" > /var/www/html/index.html","systemctl restart nginx"]}' \
             --region us-east-2
