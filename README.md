@@ -98,8 +98,3 @@
 
 ---
 
-#### Clone Repository
-
-```bash
-git clone https://github.com/your-username/AWS-Infrastructure-with-Terraform.git
-cd AWS-Infrastructure-with-Terraform
